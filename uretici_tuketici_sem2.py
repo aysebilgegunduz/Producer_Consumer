@@ -24,7 +24,7 @@ class uretici_tuketici():
         for i in (0,n):
             self.dolu.acquire()
             mutex.acquire()
-            item = self.buf[self.bos]
+            item = self.buf[self.out_]
             self.out_ = (self.out_ + 1) % n
             print("C["+str(i)+"] Consuming "+str(item))
             mutex.release()
@@ -33,10 +33,10 @@ class uretici_tuketici():
 idP = Thread()
 idC = Thread()
 index = 0
-prod_cons = uretici_tuketici(3)
-for i in (0,3):
-    idP = Thread(target=prod_cons.Producer(3,i), args=3)
+prod_cons = uretici_tuketici(10)
+for i in (0,100):
+    idP = Thread(target=prod_cons.Producer(3,i), args=4)
     idP.start()
-for i in (0,3):
-    idC = Thread(target=prod_cons.Consumer(3), args=3)
+    idC = Thread(target=prod_cons.Consumer(3), args=4)
     idC.start()
+
